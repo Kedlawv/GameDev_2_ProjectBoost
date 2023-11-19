@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     [SerializeField] int rotationThrustPower = 10;
 
     private Rigidbody rb;
+    private AudioSource mainThrustAudio;
 
     private Transform leftThruster;
     private Transform rightThruster;
@@ -16,6 +17,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        mainThrustAudio = GetComponent<AudioSource>();
 
         leftThruster = transform.Find("LeftThruster");
         rightThruster = transform.Find("RightThruster");
@@ -32,6 +34,17 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             rb.AddRelativeForce(Vector3.up * mainThrustPower * Time.deltaTime);
+            if (!mainThrustAudio.isPlaying)
+            {
+                mainThrustAudio.Play();
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.Space)) 
+        {
+            if(mainThrustAudio.isPlaying)
+            {
+                mainThrustAudio.Stop();
+            }
         }
 
         if (Input.GetKey(KeyCode.A))
