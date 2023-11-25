@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class CollisonHandler : MonoBehaviour
 {
+    [SerializeField] float delay = 2f;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -12,12 +13,23 @@ public class CollisonHandler : MonoBehaviour
                 Debug.Log("Collision with freindly object");
                 break;
             case "Finish":
-                LoadNextScene();
+                StartSuccessSequance();
                 break;
             default:
-                ReloadScene();
+                StartCrashSquence();
                 break;
         }
+    }
+
+    private void StartCrashSquence()
+    {
+        this.GetComponent<Movement>().enabled = false;
+        Invoke("ReloadScene", delay);
+    }
+
+    private void StartSuccessSequance()
+    {
+        Invoke("LoadNextScene", delay);
     }
 
     private void ReloadScene()
