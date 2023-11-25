@@ -6,9 +6,10 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] int mainThrustPower = 10;
     [SerializeField] int rotationThrustPower = 10;
+    [SerializeField] AudioSource mainEngineAudioSource;
+    [SerializeField] AudioSource thrusterAudioSource;
 
     private Rigidbody rb;
-    private AudioSource mainThrustAudio;
 
     private Transform leftThruster;
     private Transform rightThruster;
@@ -17,8 +18,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        mainThrustAudio = GetComponent<AudioSource>();
-
+       
         leftThruster = transform.Find("LeftThruster");
         rightThruster = transform.Find("RightThruster");
     }
@@ -34,16 +34,16 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             rb.AddRelativeForce(Vector3.up * mainThrustPower * Time.deltaTime);
-            if (!mainThrustAudio.isPlaying)
+            if (!mainEngineAudioSource.isPlaying)
             {
-                mainThrustAudio.Play();
+                mainEngineAudioSource.Play();
             }
         }
         else if (Input.GetKeyUp(KeyCode.Space)) 
         {
-            if(mainThrustAudio.isPlaying)
+            if(mainEngineAudioSource.isPlaying)
             {
-                mainThrustAudio.Stop();
+                mainEngineAudioSource.Stop();
             }
         }
 
@@ -57,6 +57,12 @@ public class Movement : MonoBehaviour
             Vector3 forceDirection = thrusterRotation * Vector3.up;
 
             rb.AddForceAtPosition(rotationThrustPower * forceDirection * Time.deltaTime, thrusterPosition);
+
+            if (!thrusterAudioSource.isPlaying)
+            {
+                thrusterAudioSource.Play();
+            }
+
         }
         else if (Input.GetKey(KeyCode.D))
         {
@@ -66,6 +72,15 @@ public class Movement : MonoBehaviour
             Vector3 forceDirection = thrusterRotation * Vector3.up;
 
             rb.AddForceAtPosition(rotationThrustPower * forceDirection * Time.deltaTime, thrusterPosition);
+
+            if (!thrusterAudioSource.isPlaying)
+            {
+                thrusterAudioSource.Play();
+            }
         }
+        else
+        {
+            thrusterAudioSource.Stop();
+        } 
     }
 }
