@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     [SerializeField] int rotationThrustPower = 10;
     [SerializeField] AudioSource mainEngineAudioSource;
     [SerializeField] AudioSource thrusterAudioSource;
+    [SerializeField] ParticleSystem mainEngineParticles;
 
     private Rigidbody rb;
 
@@ -38,10 +39,13 @@ public class Movement : MonoBehaviour
             {
                 mainEngineAudioSource.Play();
             }
+
+            mainEngineParticles.Emit(1);
+            
         }
         else if (Input.GetKeyUp(KeyCode.Space)) 
         {
-            if(mainEngineAudioSource.isPlaying)
+            if (mainEngineAudioSource.isPlaying)
             {
                 mainEngineAudioSource.Stop();
             }

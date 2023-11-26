@@ -5,8 +5,16 @@ public class CollisonHandler : MonoBehaviour
 {
     [SerializeField] float delay = 2f;
 
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip crashAudioClip;
+    [SerializeField] AudioClip successAudioClip;
+
+    private bool isTransitioning = false;
+
     private void OnCollisionEnter(Collision collision)
     {
+        if (isTransitioning) return;
+
         switch(collision.gameObject.tag)
         {
             case "Friendly":
@@ -23,12 +31,16 @@ public class CollisonHandler : MonoBehaviour
 
     private void StartCrashSquence()
     {
+        isTransitioning = true;
+        audioSource.PlayOneShot(crashAudioClip);
         this.GetComponent<Movement>().enabled = false;
         Invoke("ReloadScene", delay);
     }
 
     private void StartSuccessSequance()
     {
+        isTransitioning = true;
+        audioSource.PlayOneShot(successAudioClip);
         Invoke("LoadNextScene", delay);
     }
 
