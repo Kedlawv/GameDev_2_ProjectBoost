@@ -9,6 +9,10 @@ public class Movement : MonoBehaviour
     [SerializeField] AudioSource mainEngineAudioSource;
     [SerializeField] AudioSource thrusterAudioSource;
     [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] ParticleSystem leftThrusterParticles;
+    [SerializeField] ParticleSystem rightThrusterParticles;
+    [SerializeField] ParticleSystem leftSecThrusterParticles;
+    [SerializeField] ParticleSystem rightSecThrusterParticles;
 
     private Rigidbody rb;
 
@@ -67,6 +71,9 @@ public class Movement : MonoBehaviour
                 thrusterAudioSource.Play();
             }
 
+            rightThrusterParticles.Emit(1);
+            //rightSecThrusterParticles.Emit(2);
+
         }
         else if (Input.GetKey(KeyCode.D))
         {
@@ -81,6 +88,9 @@ public class Movement : MonoBehaviour
             {
                 thrusterAudioSource.Play();
             }
+
+            leftThrusterParticles.Emit(1);
+            //leftSecThrusterParticles.Emit(2);
         }
         else
         {
